@@ -1,23 +1,22 @@
-const express = require('express');
+const express = require("express");
 
 const app = express();
-
 const PORT = 8081;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message : "Home Page of Library Management System"
-    })
+/* Import Route Files */
+const userRoutes = require("./routes/users");
+const bookRoutes = require("./routes/books");
+
+/* Connect Routes */
+app.use("/users", userRoutes);
+app.use("/books", bookRoutes);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Library Management System API Running" });
 });
 
-app.use((req, res) => {
-    res.status(500).json({
-        message : "Not built yet"
-    })
-})
-
 app.listen(PORT, () => {
-    console.log(`Library Management System is running on port http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
